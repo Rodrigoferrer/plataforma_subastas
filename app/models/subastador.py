@@ -1,5 +1,5 @@
 
-from models.usuario import Usuario as Usuario
+from models.user import Usuario as Usuario
 
 class Subastador(Usuario):
     def __init__(self, documento: str, correo: str, password: str, 
