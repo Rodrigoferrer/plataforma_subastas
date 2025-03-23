@@ -1,5 +1,7 @@
 
-from datetime import uuid, uuid4
+# from app import db
+import uuid
+from datetime import datetime
 
 """
 Class Base,
@@ -10,15 +12,18 @@ all models inherits from it
 
 
 class Base:
-    def __init__(self):
-        self.uuid = str(uuid.uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = datetime.now()
+        def __init__(self):
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
 
-    def to_dict(self) -> Dict[str, Any]:
-        """Convierte la instancia a un diccionario para serialización"""
-        return {
-            'uuid': self.uuid,
-            'created_at': self.created_at.isoformat(),
-            'updated_at': self.updated_at.isoformat()
-        }
+        def save(self):
+            """Update the updated_at timestamp whenever the object is modified"""
+            self.updated_at = datetime.now()
+
+        def update(self, data):
+            """Update the attributes of the object based on the provided dictionary"""
+            for key, value in data.items():
+                if hasattr(self, key):
+                    setattr(self, key, value)
+            self.save()
